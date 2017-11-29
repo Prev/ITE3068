@@ -3,11 +3,11 @@
 	function connect_db() {
 		if ($GLOBALS['db_connection']) return $GLOBALS['db_connection'];
 
-		$server = 'db';
-		$user = 'root';
-		$pass = 'root';
-		$database = 'test';
-		$port = 3306;
+		$server = getenv('DATABASE_HOST') ?: 'localhost';
+		$user = getenv('DATABASE_USER') ?: 'root';
+		$pass = getenv('DATABASE_PASS') ?: '';
+		$database = getenv('DATABASE_NAME') ?: 'test';
+		$port = getenv('DATABASE_PORT') ?: 3306;
 
 		$connection = new mysqli($server, $user, $pass, $database, $port);
 

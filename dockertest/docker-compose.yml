@@ -24,7 +24,11 @@ services:
         ports:
             - "8082:80"
         environment:
-            DB_HOST: db:3307
+            DATABASE_HOST: db
+            DATABASE_USER: root
+            DATABASE_PASS: root
+            DATABASE_NAME: test
+            DATABASE_PORT: 3306
         links:
             - db
         restart: always
