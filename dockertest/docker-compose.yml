@@ -30,4 +30,4 @@ services:
         restart: always
 
         volumes:
-            - ./dtapp:/var/www/html
+            - ./www-data:/var/www/html

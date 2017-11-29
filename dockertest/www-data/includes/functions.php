@@ -22,4 +22,15 @@
 		return $connection;
 	}
 
-	
+	function init_table() {
+		$db = connect_db();
+
+		$r = $db->query(
+			"CREATE TABLE IF NOT EXISTS `guestbook` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			  PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;"
+		);
+	}
