@@ -18,11 +18,11 @@ services:
     dtapp:
         build:
             context: .
-            dockerfile: compose/dtapp/Dockerfile-dev
+            dockerfile: compose/askhy/Dockerfile
         depends_on:
             - db
         ports:
-            - "8082:80"
+            - "8080:80"
         environment:
             DATABASE_HOST: db
             DATABASE_USER: root
@@ -32,6 +32,3 @@ services:
         links:
             - db
         restart: always
-
-        volumes:
-            - ./www-data:/var/www/html
