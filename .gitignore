@@ -1,2 +1,3 @@
 askhy/volumes/
 askhy/venv/
+*.pyc

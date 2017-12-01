@@ -15,7 +15,7 @@ services:
             - ./volumes/db_data:/var/lib/mysql
             - ./volumes/mysql_log:/var/log/mysql
 
-    dtapp:
+    askhy:
         build:
             context: .
             dockerfile: compose/askhy/Dockerfile
@@ -29,6 +29,7 @@ services:
             DATABASE_PASS: root
             DATABASE_NAME: test
             DATABASE_PORT: 3306
+            APP_PORT: 80
         links:
             - db
         restart: always
