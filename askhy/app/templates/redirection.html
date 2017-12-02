@@ -1,0 +1,14 @@
+<script type="text/javascript">
+	{% if message %}
+	alert('{{ message }}');
+	{% endif %}
+
+	{% if success == True %}
+	alert('성공했습니다');
+	{% elif success == False %}
+	alert('오류가 발생했습니다');
+	{% endif %}
+
+
+	location.replace('/');
+</script>
