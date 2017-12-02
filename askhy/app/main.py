@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import os
 
 from core.dbdriver import get_db, init_tables
@@ -9,18 +9,16 @@ init_tables()
 
 @app.route('/')
 def index():
-	html = "<h1>부탁하냥</h1><ul>"
-
 	with get_db().cursor() as cursor :
 		sql = "SELECT *, (SELECT COUNT(*) FROM `cheer` WHERE ask_id = ask.id) AS cheer_cnt FROM `ask`"
 
 		cursor.execute(sql)
 		result = cursor.fetchall()
+	print(result)
 
-		for id, message, created_time, cheer_cnt in result :
-			html += "<li>%d: %s (%d)</li>" % (id, message, cheer_cnt)
-
-	return html
+	return render_template('main.html',
+		dataset=result,
+	)
 
 if __name__ == '__main__':
 	app.run(
