@@ -2,23 +2,33 @@
 
 {% block content %}
 	<ul id="asks">
-		{% for id, message, created_time, cheer_cnt in dataset %}
-		<li>
+		{% for id, message, register_time, cheer_cnt in dataset %}
+		<li id="ask-{{ id }}">
+			<div class="highlight"></div>
 			<h4>{{ message }}</h4>
-			<div class="time">{{ created_time.year }}년 {{ created_time.month }}월 {{ created_time.day }}일</div>
-			<button class="primary" onclick="$('#cheer-popup .ask-id').val({{ id }}); $('#cheer-popup').show()">응원하냥! ({{ cheer_cnt }}명)</button>
+			<div class="time">{{ register_time.strftime("%Y년 %m월 %d일") }}</div>
+			
+			<div class="btn-container">
+				<button class="cheer-btn primary" onclick="$('#cheer-popup .ask-id').val({{ id }}); $('#cheer-popup').fadeIn()">
+					<div class="highlight"></div>
+					<span>응원하냥! ({{ cheer_cnt }}명)</span>
+				</button>
+				<a class="look-inside" href="/ask/{{ id }}">
+					<i class="fa fa-eye" aria-hidden="true"></i>
+				</a>
+			</div>
 		</li>
 		{% endfor %}
 	</ul>
 
 	<button class="add-ask">
 		<i class="fa fa-plus-square-o" aria-hidden="true"></i>
-		<span onclick="$('#add-popup').show()">나도 부탁하기</span>
+		<span onclick="$('#add-popup').fadeIn()">나도 부탁하기</span>
 	</button>
 
 
 	<div id="add-popup" class="popup">
-		<div class="mask" onclick="$(this).parent().hide()"></div>
+		<div class="mask" onclick="$(this).parent().fadeOut()"></div>
 		<div class="content">
 			<form action="/ask" method="POST">
 				<div align="center">
@@ -34,7 +44,7 @@
 
 
 	<div id="cheer-popup" class="popup">
-		<div class="mask" onclick="$(this).parent().hide()"></div>
+		<div class="mask" onclick="$(this).parent().fadeOut()"></div>
 		<div class="content">
 			<form action="/cheer" method="POST">
 				<div align="center">
@@ -49,4 +59,24 @@
 		</div>
 	</div>
 
+	<script type="text/javascript">
+		if (location.hash != "") {
+			if (location.hash[1] == "a") {
+				var id = location.hash.substr(2);
+
+				var hightLightDom = $("#ask-" + id + " > .highlight");
+				hightLightDom.fadeIn("slow", function() {
+					hightLightDom.fadeOut("slow");
+				});
+			}
+			else if (location.hash[1] == "c") {
+				var id = location.hash.substr(2);
+
+				var hightLightDom = $("#ask-" + id + " button .highlight");
+				hightLightDom.fadeIn("slow", function() {
+					hightLightDom.fadeOut("slow");
+				});
+			}
+		}
+	</script>
 {% endblock %}

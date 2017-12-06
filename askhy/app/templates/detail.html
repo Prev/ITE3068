@@ -1,0 +1,58 @@
+{% extends "_layout.html" %}
+
+{% block head %}
+	<style type="text/css">
+		#content{
+			background-color: white;
+			border-radius: 10px;
+		}
+
+		#content h1{
+			margin: 0;
+			padding: 35px 0 15px;
+			text-align: center;
+			font-size: 30px;
+		}
+
+		#content > div{
+			text-align: center;
+		}
+
+		#content .sub{ color: #666 }
+
+		#content ul{
+			padding-bottom: 30px;
+			list-style: none;
+			margin: 10px 0 0;
+			padding: 0;
+		}
+
+		#content ul li{
+			padding: 10px;
+			text-align: center;
+			border-top: 1px solid #eee;
+		}
+
+		#content ul li h4{
+			margin: 0;
+			padding: 3px 0;
+		}
+
+	</style>
+{% endblock %}
+
+{% block content %}
+	<h1>{{ message }}</h1>
+	<div class="sub">
+		<div class="time">{{ register_time.strftime("%Y년 %m월 %d일") }}</div>
+		<div>총 {{ cheers | length }}개의 응원</div>
+	</div>
+	<ul>
+		{% for id, ask_id, message, register_time in cheers %}
+		<li>
+			<h4>{{ message }}</h4>
+			<div>{{ register_time.strftime("%Y년 %m월 %d일") }}</div>
+		</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
