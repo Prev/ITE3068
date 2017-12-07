@@ -10,7 +10,7 @@ init_tables()
 @app.route('/')
 def index():
 	with get_db().cursor() as cursor :
-		cursor.execute("SELECT *, (SELECT COUNT(*) FROM `cheer`WHERE ask_id = ask.id) AS cheer_cnt FROM `ask`")
+		cursor.execute("SELECT *, (SELECT COUNT(*) FROM `cheer` WHERE ask_id = ask.id) AS cheer_cnt FROM `ask`")
 		result = cursor.fetchall()
 
 	return render_template('main.html',
@@ -29,11 +29,12 @@ def view_ask(ask_id):
 		cursor.execute("SELECT * FROM `cheer` WHERE ask_id = %s", (ask_id, ))
 		rows2 = cursor.fetchall()
 
-		print(rows2)
-
 	return render_template('detail.html',
+		id=row[0],
 		message=row[1],
-		register_time=row[2],
+		ip_address=row[2],
+		register_time=row[3],
+		current_url=request.url,
 		cheers=rows2,
 	)
 
@@ -44,8 +45,8 @@ def add_ask():
 	message = request.form.get('message')
 
 	with conn.cursor() as cursor :
-		sql = "INSERT INTO `ask` (`message`) VALUES (%s)"
-		r = cursor.execute(sql, (message, ))
+		sql = "INSERT INTO `ask` (`message`, `ip_address`) VALUES (%s, %s)"
+		r = cursor.execute(sql, (message, request.remote_addr))
 
 	id = conn.insert_id()
 	conn.commit()
@@ -60,14 +61,24 @@ def add_cheer():
 	message = request.form.get('message')
 
 	with conn.cursor() as cursor :
-		sql = "INSERT INTO `cheer` (`ask_id`, `message`) VALUES (%s, %s)"
-		r = cursor.execute(sql, (ask_id, message))
+		sql = "INSERT INTO `cheer` (`ask_id`, `message`, `ip_address`) VALUES (%s, %s, %s)"
+		r = cursor.execute(sql, (ask_id, message, request.remote_addr))
 
 	conn.commit()
 
-	return redirect("/#c" + ask_id)
+	back = request.form.get('back')
+	if back :
+		return redirect(back)
+	else :
+		return redirect("/#c" + ask_id)
 
 
+@app.template_filter()
+def hide_ip_address(ip_address):
+	if not ip_address : return ""
+	else :
+		ipa = ip_address.split(".")
+		return "%s.%s.*.*" % (ipa[0], ipa[1])
 
 
 if __name__ == '__main__':

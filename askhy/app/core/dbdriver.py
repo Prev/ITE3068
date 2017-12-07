@@ -30,6 +30,7 @@ def init_tables() :
 					CREATE TABLE IF NOT EXISTS `ask` (
 					  `id` int(11) NOT NULL AUTO_INCREMENT,
 					  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+					  `ip_address` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 					  `register_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 					  PRIMARY KEY (`id`)
 					) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
@@ -38,6 +39,7 @@ def init_tables() :
 					  `id` int(11) NOT NULL AUTO_INCREMENT,
 					  `ask_id` int(11) NOT NULL,
 					  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+					  `ip_address` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 					  `register_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 					  PRIMARY KEY (`id`),
 					  KEY `ask_id` (`ask_id`)

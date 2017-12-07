@@ -1,8 +1,12 @@
 {% extends "_layout.html" %}
 
+{% block head %}
+	<link rel="stylesheet" href="/static/css/main.css">
+{% endblock %}
+
 {% block content %}
 	<ul id="asks">
-		{% for id, message, register_time, cheer_cnt in dataset %}
+		{% for id, message, ip_address, register_time, cheer_cnt in dataset %}
 		<li id="ask-{{ id }}">
 			<div class="highlight"></div>
 			<h4>{{ message }}</h4>
@@ -21,7 +25,7 @@
 		{% endfor %}
 	</ul>
 
-	<button class="add-ask">
+	<button class="add-btn add-ask">
 		<i class="fa fa-plus-square-o" aria-hidden="true"></i>
 		<span onclick="$('#add-popup').fadeIn()">나도 부탁하기</span>
 	</button>
