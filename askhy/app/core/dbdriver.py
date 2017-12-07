@@ -2,6 +2,8 @@ import pymysql
 import os
 
 _db_instance = None
+""" Get database connection singleton object
+"""
 def get_db() :
 	global _db_instance
 	if _db_instance: return _db_instance
@@ -17,6 +19,10 @@ def get_db() :
 
 		return _db_instance
 
+
+"""
+Init tables in this app
+"""
 def init_tables() :
 	with get_db().cursor() as cursor :
 		try :

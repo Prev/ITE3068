@@ -5,8 +5,14 @@ from core.dbdriver import get_db, init_tables
 
 app = Flask(__name__)
 
+
+# Init tables in db
 init_tables()
 
+"""
+Index page
+Show list of `asks`, and cheer count of each ask
+"""
 @app.route('/')
 def index():
 	with get_db().cursor() as cursor :
@@ -18,6 +24,10 @@ def index():
 	)
 
 
+"""
+Show detail of one `ask`
+See all cheers in this ask
+"""
 @app.route('/ask/<int:ask_id>', methods=['GET'])
 def view_ask(ask_id):
 	conn = get_db()
@@ -39,6 +49,12 @@ def view_ask(ask_id):
 	)
 
 
+"""
+Add new ask
+
+[request params]
+  - message
+"""
 @app.route('/ask', methods=['POST'])
 def add_ask():
 	conn = get_db()
@@ -54,6 +70,13 @@ def add_ask():
 	return redirect("/#a" + str(id))
 
 
+"""
+Add new cheer
+
+[request params]
+  - ask_id
+  - message
+"""
 @app.route('/cheer', methods=['POST'])
 def add_cheer():
 	conn = get_db()
@@ -73,12 +96,20 @@ def add_cheer():
 		return redirect("/#c" + ask_id)
 
 
+"""
+Template filter: <hide_ip_address>
+Hide last sections of IP address
+
+ex) 65.3.12.4 -> 65.3.*.*
+"""
 @app.template_filter()
 def hide_ip_address(ip_address):
 	if not ip_address : return ""
 	else :
 		ipa = ip_address.split(".")
 		return "%s.%s.*.*" % (ipa[0], ipa[1])
+
+
 
 
 if __name__ == '__main__':
