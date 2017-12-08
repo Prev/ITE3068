@@ -1,3 +1,6 @@
 [submodule "askhy"]
 	path = askhy
 	url = https://github.com/Prev/askhy
+[submodule "askhy_caching"]
+	path = askhy_caching
+	url = git://github.com/prev/askhy
