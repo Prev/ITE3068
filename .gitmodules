@@ -1,0 +1,9 @@
+[submodule "askhy"]
+	path = askhy
+	url = https://github.com/Prev/askhy
+[submodule "askhy_arcus"]
+	path = askhy_arcus
+	url = git://github.com/prev/askhy
+[submodule "askhy_nbasearc"]
+	path = askhy_nbasearc
+	url = git://github.com/prev/askhy
