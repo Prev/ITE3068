@@ -7,3 +7,6 @@
 [submodule "askhy_nbasearc"]
 	path = askhy_nbasearc
 	url = git://github.com/prev/askhy
+[submodule "docker_arcus"]
+	path = docker_arcus
+	url = https://github.com/Prev/docker-arcus
