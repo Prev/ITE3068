@@ -4,9 +4,12 @@
 [submodule "askhy"]
 	path = askhy
 	url = https://github.com/Prev/askhy
+	branch = 1.1
 [submodule "askhy_arcus"]
 	path = askhy_arcus
 	url = https://github.com/Prev/askhy
+	branch = arcus-combined-1.1
 [submodule "askhy_nbasearc"]
 	path = askhy_nbasearc
 	url = https://github.com/Prev/askhy
+	branch = redis-combined
