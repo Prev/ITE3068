@@ -3,8 +3,6 @@
 ## 1.1 전체적 목표
  네이버의 오픈소스 프로젝트인 Arcus(Memory Cache Cloud)를 사용해서 샘플 프로젝트에 구현해보고 Arcus 도입의 전/후 간의 성능을 비교해본다. 이때 Docker를 사용해서 서버를 구성해보고 NGrinder를 사용해서 스트레스 테스트를 진행한다. 또한 Arcus와 유사한 캐싱 오픈소스인 nBase-ARC를 사용해보거나 멀티노드를 구성해서 성능 비교를 해본다.
 
-<br>
-
 ## 1.2. 단계별 세부목표 및 작업 내역
 * [x] 도커사용
 * [x] Arcus 사용하지 않은 경우와 사용한 경우의 성능비교
@@ -12,8 +10,6 @@
 * [x] 멀티노드 사용
 * [ ] Hubblemon 사용
 * [x] 스트레스 툴(Naver NGrinder) 사용
-
-<br>
 
 ## 1.3. 다운로드 방법
 
@@ -23,11 +19,6 @@ cd single6
 git submodule init
 git submodule update
 ```
-
-
-<br>
-
-----
 
 <br>
 
@@ -66,15 +57,12 @@ git submodule update
 
 *기본적인 노드로만 구성한 서버 아키텍처*
 
-<br>
-
 ### B. Arcus 사용시의 아키텍처
 
 <img src="https://hconnect.hanyang.ac.kr/SW_studio2_2017/single6/uploads/071a8366788cdb50dc49a181520aba10/image.png" width="700">
 
 *Arcus를 함께 넣어 구성한 서버 아키텍처*
 
-<br>
 
 ### C. nBase-ARC 사용시의 아키텍처
 <img src="https://hconnect.hanyang.ac.kr/SW_studio2_2017/single6/uploads/23d1f0b32b2930d375b5f59f4992651f/image.png" width="700">
@@ -82,16 +70,12 @@ git submodule update
 *nBase-ARC를 함께 넣어 구성한 서버 아키텍처*
 
 
-<br>
-
 ### C. 멀티노드 구성시의 아키텍처
 <img src="https://hconnect.hanyang.ac.kr/SW_studio2_2017/single6/uploads/c97e99b1afa99dbac088c0333819b426/SW_Studio2__4_.png" width="700">
 
 *멀티노드로 웹 어플리케이션을 구성한 서버 아키텍처*
 
 
-<br>
-<br>
 <br>
 
 # 3. 프로젝트 및 이미지
@@ -102,7 +86,7 @@ git submodule update
 
 *웹 어플리케이션인 "부탁하냥"의 화면*
 
-<br><br>
+<br>
 
 또한 이 어플리케이션에 대해 `Dockerfile`을 작성하여 이미지화 시켰으며 **Docker Hub**에도 해당 이미지를 업로드 해둔 상태이다. (https://hub.docker.com/r/prev/askhy/)
 
@@ -111,15 +95,11 @@ git submodule update
 *Docker Hub에 올라간 ASKHY 어플리케이션*
 
 
-<br>
-
 서비스 컨셉은 기본적인 게시판과 비슷하지만 게시글을 `부탁`이라는 이름으로 쓰며, 댓글을 `응원`이라는 이름을 붙여서 개발하였다.
 
 위 어플리케이션에 대한 MySQL 스키마는 아래와 같다.
 
 <img src="https://hconnect.hanyang.ac.kr/SW_studio2_2017/single6/uploads/474e0bf26ae899c195a3f90cac40d05b/SW_Studio2__5_.png" width="500">
-
-<br>
 
 이 모델을 바탕으로 성능 테스트를 위해 메인 화면에서 수행 시간이 꽤 걸리는 데이터를 받도록  했다. 메인 화면에서 요구하는 데이터는 다음과 같다.
 
@@ -128,8 +108,6 @@ git submodule update
 - 부탁 등록 시간
 - 부탁 별 응원(`cheer`) 수
 - 부탁 별 순수 응원 수: IP 하나 당 중복되는 응원을 제거하여, 순수하게 몇 명이 해당 부탁에 응원을 했는지를 보여주는 숫자
-
-<br>
 
 이를 쿼리로 표현하면 다음과 같다.
 
@@ -147,7 +125,6 @@ FROM `ask`
 
 *7만개 행에 대한 쿼리 수행 시간*
 
-<br>
 
 어플리케이션은 아래 명령어로 실행할 수 있다. (`MySQL` 컨테이너가 먼저 띄워져 있어야 함)
 
@@ -166,9 +143,6 @@ $ docker run -p 8080:80 \
 <br>
 
 위 코드는 https://github.com/Prev/askhy/tree/1.1 에서 확인할 수 있다.
-
-<br>
-<br>
 
 
 ## 3.2. ASKHY@arcus-combined
@@ -191,9 +165,7 @@ $ docker run -p 8080:80 \
 
 *askhy@arcus-combined 이미지의 실행 방법*
 
-<br>
-
-키시는 `부탁 별 응원 수`와  `부탁 별 순수 응원 수`를 저장하는 방식으로 개발하였다.  
+캐시는 `부탁 별 응원 수`와  `부탁 별 순수 응원 수`를 저장하는 방식으로 개발하였다.  
 성능 부하가 발생하는 가장 큰 요인이 위 두개 요소이기 때문에, 기본적인 데이터는 `MySQL`에서 요청해서 가져오며 위 두개의 컬럼에 대해서만 캐시를 이용한다.
 
 전체 프로세스는 다음과 같다.
@@ -205,12 +177,7 @@ $ docker run -p 8080:80 \
 5.`MySQL`에서 받아온 데이터를 다시 캐시에 저장
 6. `HTML` 렌더링
 
-<br>
-
 위 코드는 https://github.com/Prev/askhy/tree/1.1-arcus-combined 에서 확인할 수 있다.
-
-<br><br>
-
 
 ## 3.3. ASKHY@redis-combined
 위 웹 어플리케이션에 `nBase-ARC(redis)`를 이용하여 성능 개선을 시킨 버전이다.  3.2와 마찬가지로 Branch를 통해 관리 중에 있다.
@@ -231,11 +198,7 @@ $ docker run -p 8080:80 \
 ```
 *askhy@redis-combined 이미지의 실행 방법*
 
-<br>
-
 성능 개선 로직은 `3.2 ASKHY@arcus-combined`와 완전히 동일하며, 위 코드는 https://github.com/Prev/askhy/tree/1.1-redis-combined 에서 확인할 수 있다.
-
-<br><br>
 
 ## 3.4. ASKHY Load Balancer
 위 웹 어플리케이션을 멀티노드로 구성하기 위해 `nginx` 를 이용하여 간단하게 `Load Balancer`를 만들고 도커와 함께 서버 구성을 진행하였다.
@@ -255,7 +218,6 @@ server {
 ```
 *Load Balancer의 nginx conf 파일*
 
-<br>
 
 실행하기 위해서는 먼저 다수의 `ASKHY` 컨테이너를 띄운 뒤 `nginx.conf`를 알맞게 수정하고 다음 명령어를 수행하면 된다.
 ```bash
@@ -265,8 +227,6 @@ $ docker run -d -p 8080:80 \
   --name askhy_lb \
   askhy_lb
 ```
-
-<br><br>
 
 ## 3.5 MySQL
 
@@ -279,8 +239,6 @@ $ docker run -d \
   --name mysql \
   mysql:5.7
 ```
-
-<br><br>
 
 ## 3.6 NGrinder
 
@@ -304,8 +262,6 @@ $ docker run -d \
   <controller_ip>:<controller_web_port>
 ```
 
-<br><br>
-
 ## 3.7 Arcus
 
 Dockerhub에 올라온 오픈소스를 활용하였다. 총 3개의 노드와 1개의 어드민을 띄웠으며 아래 명령어를 통해 실행하였다. (환경에 따라 추가 설정을 해주어야 한다)
@@ -317,8 +273,6 @@ $ docker run -d --name="arcus-memcached-2" -h "memcached-2" arcus-memcached
 $ docker run -d --name="arcus-memcached-3" -h "memcached-3" arcus-memcached
 ```
 
-<br><br>
-
 ## 3.8 nBase-ARC
 
 Dockerhub에 올라온 오픈소스를 활용하였다. 아래 명령어를 통해 실행한다.
@@ -328,7 +282,7 @@ $ docker run -p 6000:6000 -d --name=nbasearc hyeongseok05/nbase-arc
 ```
 
 
-<br><br><br>
+<br>
 
 # 4. 성능 비교
 MySQL만 사용한 버전(1), MySQL과 Arcus를 사용한 버전(2), MySQL과 nBase-ARC를 사용한 버전(3), MySQL만 사용하지만 서버 어플리케이션을 멀티노드로 구성한 버전(4)으로 각각 성능 테스트를 진행하였다. 성능 측정 시에는 약 4만개의 데이터를 넣어두고 뷰에 대한 측정만 진행하였다.
@@ -339,9 +293,9 @@ TPS (Transaction Per Second)의 경우 약 4~5배 차이가 남을 확인할 수
 
 <img src="https://hconnect.hanyang.ac.kr/SW_studio2_2017/single6/uploads/2cf805f4925a8c2d13100cdb25cb61c5/그림2.png" width="700">
 
-<br>
 
 <img src="https://hconnect.hanyang.ac.kr/SW_studio2_2017/single6/uploads/ed4a4d7d6ef9d12409a152d2cf061c05/image.png" width="700">
+
 *NGrinder에서의 Stress Test*
 
 
@@ -360,7 +314,7 @@ TPS (Transaction Per Second)의 경우 약 4~5배 차이가 남을 확인할 수
 ### D. 멀티노드 어플리케이션 구성 + Cache Storage 미사용시
 <img src="https://hconnect.hanyang.ac.kr/SW_studio2_2017/single6/uploads/a4cb2d6231a6c72aa90645b9b3cf4bf3/image.png" width="700">
 
-<br><br><br>
+<br>
 
 # 5. 오픈소스 기여
 
@@ -374,7 +328,7 @@ TPS (Transaction Per Second)의 경우 약 4~5배 차이가 남을 확인할 수
 현재 이 프로젝트는 13개의 Star와 7개의 Fork를 받은 상태인데, 내 코드를 통해 다른 사람들에게 일종의 길잡이를 해주며 조금 다른 방법으로 오픈소스에 기여했다고 생각하고 있다.
 
 
-<br><br><br>
+<br>
 
 # 6. 결론
 
@@ -388,4 +342,5 @@ Docker를 이용하여 단일 환경에서 다양한 라이브러리들을 활�
 *GitLab의 Issue Board*
 
 <img src="https://hconnect.hanyang.ac.kr/SW_studio2_2017/single6/uploads/119edb55e679181d7f20edcf86733403/structure.png" width="300">
+
 *서브모듈로 관리되고 있는 프로젝트*
