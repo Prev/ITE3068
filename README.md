@@ -14,8 +14,8 @@
 ## 1.3. 다운로드 방법
 
 ```bash
-git clone https://hconnect.hanyang.ac.kr/SW_studio2_2017/single6
-cd single6
+git clone https://github.com/Prev/ITE3068_Proj
+cd ITE3068_Proj
 git submodule init
 git submodule update
 ```
