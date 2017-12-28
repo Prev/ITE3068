@@ -289,7 +289,7 @@ MySQL만 사용한 버전(1), MySQL과 Arcus를 사용한 버전(2), MySQL과 nB
 
 <img src="https://hconnect.hanyang.ac.kr/SW_studio2_2017/single6/uploads/dc2ac1674f823131363783979838612e/그림1.png" width="700">
 
-TPS (Transaction Per Second)의 경우 약 4~5배 차이가 남을 확인할 수 있었고, MTT (Mean Test Time)의 경우에도 마찬가지로 약 4~5배 차이가 남을 확인할 수 있었다.
+TPS (Transaction Per Second)의 경우 약 4\~5배 차이가 남을 확인할 수 있었고, MTT (Mean Test Time)의 경우에도 마찬가지로 약 4\~5배 차이가 남을 확인할 수 있었다.
 
 <img src="https://hconnect.hanyang.ac.kr/SW_studio2_2017/single6/uploads/2cf805f4925a8c2d13100cdb25cb61c5/그림2.png" width="700">
 
